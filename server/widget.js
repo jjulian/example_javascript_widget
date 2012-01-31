@@ -46,7 +46,7 @@
   function main() {
     jQuery(document).ready(function() {
       jQuery('head').append('<link href="' + serverFQDN + '/vendor/cleanslate.css" rel="stylesheet" type="text/css">');
-      jQuery('head').append('<link href="' + serverFQDN + '/widget.css?1" rel="stylesheet" type="text/css">');
+      jQuery('head').append('<link href="' + serverFQDN + '/widget.css" rel="stylesheet" type="text/css">');
       jQuery.getScript(serverFQDN + '/vendor/json2.js');
 
       if (jQuery(container).size() === 0) {
@@ -61,6 +61,7 @@
   function render() {
     // build the widget
     var markup = '';
+    markup = markup + '<input type="text" id="user_text" placeholder="type something"></input>';
     markup = markup + '<button>' + options.buttonText + '</button>';
     jQuery(container).append(markup);
     // handle events
@@ -70,7 +71,7 @@
   function handleClick() {
     jQuery(this).attr('disabled', 'disabled');
     // JSONP request to server
-    jQuery.getJSON(serverFQDN + '/widget_submit.php?callback=?', {}, serverResponse);
+    jQuery.getJSON(serverFQDN + '/widget_submit.php?callback=?', {text: jQuery(container + ' #user_text').val()}, serverResponse);
   }
 
   function serverResponse(data) {
