@@ -71,12 +71,15 @@
   function handleClick() {
     jQuery(this).attr('disabled', 'disabled');
     // JSONP request to server
-    jQuery.getJSON(serverFQDN + '/widget_submit.php?callback=?', {text: jQuery(container + ' #user_text').val()}, serverResponse);
+    jQuery.getJSON(serverFQDN + '/widget_submit.php?callback=?', {
+      install_url: window.location.href,
+      text: jQuery(container + ' #user_text').val()
+    }, serverResponse);
   }
 
   function serverResponse(data) {
     jQuery(container + ' button').removeAttr('disabled');
-    updateStatus(data.message + ' Your ip is ' + data.ip + '. Host site is ' + data.host + '. UA is ' + data.ua);
+    updateStatus(data.message + ' Your ip is ' + data.ip + '. Host site is ' + data.site + '. UA is ' + data.ua);
   }
   
   function updateStatus(msg) {
